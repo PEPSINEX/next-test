@@ -16,3 +16,12 @@
 - フレームワーク：Next.js（App Router）
 ### 開発環境
 - Docker（Node.js 22）
+## 💻 開発環境のセットアップ
+
+以下のコマンドでアプリを起動します：
+```bash
+docker compose up -d
+```
+起動後、ブラウザで以下にアクセスしてください：
+
+👉 http://localhost:3000

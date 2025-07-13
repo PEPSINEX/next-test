@@ -9,3 +9,5 @@ RUN apt-get update && \
 RUN npm install -g npm@11.4.2
 
 WORKDIR /app
+
+CMD ["npm", "run", "dev"]
