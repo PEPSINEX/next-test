@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.APP_DIR }}/.npm
-          key: cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-${{ hashFiles('my-next-app/package-lock.json') }}
+          key: cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-
 
