@@ -9,6 +9,7 @@ export default function DashboardPage() {
   const userData = { name: 'new user', password: 'password123' };
   const validatedUser = UserSchema.parse(userData);
 
+  console.log(userData);
   console.log(validatedUser);
 
   // users.push({ id: 101, name: 'new user' });
