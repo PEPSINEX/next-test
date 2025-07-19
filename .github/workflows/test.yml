@@ -46,7 +46,7 @@ jobs:
             cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-
 
       - name: Set npm cache directory
-        run: npm config set cache ${{ env.APP_DIR }}/.npm --global
+        run: npm config set cache .npm --global
 
       - name: Install dependencies
         run: npm ci
@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.APP_DIR }}/.next
-          key: cache-next-${{ runner.os }}-${{ hashFiles('${{ env.APP_DIR }}/next.config.js', '${{ env.APP_DIR }}/package-lock.json', '${{ env.APP_DIR }}/**/*.ts', '${{ env.APP_DIR }}/**/*.tsx') }}
+          key: cache-next-${{ runner.os }}-${{ hashFiles('my-next-app/next.config.js', 'my-next-app/package-lock.json', 'my-next-app/**/*.ts', 'my-next-app/**/*.tsx') }}
           restore-keys: |
             cache-next-${{ runner.os }}-
 
