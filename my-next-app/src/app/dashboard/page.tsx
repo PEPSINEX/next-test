@@ -1,13 +1,13 @@
-import fs from 'fs';
-import { USERS_JSON_PATH } from '@/lib/paths'
+// import fs from 'fs';
+// import { USERS_JSON_PATH } from '@/lib/paths'
 import { UserSchema } from '@/schemas/userSchema';
 
 export default function DashboardPage() {
-  const usersJson = fs.readFileSync(USERS_JSON_PATH, 'utf-8');
-  const users = JSON.parse(usersJson);
+  // const usersJson = fs.readFileSync(USERS_JSON_PATH, 'utf-8');
+  // const users = JSON.parse(usersJson);
 
-  const userData = { name: 'new user', password: 'password123' };
-  const validatedUser = UserSchema.parse(userData);
+  const inputUser = { name: 'new user', password: 'password123' };
+  const validatedUser = UserSchema.parse(inputUser);
 
   console.log(validatedUser);
 
