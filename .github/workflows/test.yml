@@ -10,7 +10,6 @@ on:
 
 env:
   NODE_VERSION: 22.17.0
-  NPM_VERSION: 11.4.2
   APP_DIR: my-next-app
 
 jobs:
@@ -24,14 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install specific npm version
-        run: npm install -g npm@${{ env.NPM_VERSION }}
-
       - name: Ensure package-lock.json exists
         run: |
           test -f package-lock.json || {
@@ -39,30 +30,23 @@ jobs:
             exit 1
           }
 
-      - name: Generate lockfile hash
-        id: lockfile
-        run: |
-          echo "npm-hash=$(sha256sum package-lock.json | cut -d' ' -f1)" >> $GITHUB_OUTPUT
-          echo "next_hash=$(find . -name '*.ts' -o -name '*.tsx' -o -name 'next.config.js' | sort | xargs cat | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.APP_DIR }}/.npm
-          key: cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-${{ steps.lockfile.outputs.npm-hash }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.APP_DIR }}/.next/cache
+          key: next-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
-            cache-npm-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ env.NPM_VERSION }}-
+            next-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Cache Next.js build
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.APP_DIR }}/.next
-          key: cache-next-${{ runner.os }}-${{ steps.lockfile.outputs.next_hash }}
-          restore-keys: |
-            cache-next-${{ runner.os }}-
 
       - name: Build project
         run: npm run build
