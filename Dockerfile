@@ -1,7 +1,7 @@
 FROM node:22-slim
 
 WORKDIR /app
-
-RUN npm install
+COPY my-next-app/package*.json ./
+RUN npm ci
 
 CMD ["npm", "run", "dev"]
