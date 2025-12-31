@@ -9,4 +9,4 @@ services:
     volumes:
       - ./my-next-app:/app
     environment:
-      - WATCHPACK_POLLING=true
+      WATCHPACK_POLLING: "true"
