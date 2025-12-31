@@ -1,6 +1,8 @@
 services:
   next:
-    build: .
+    build:
+      context: ./my-next-app
+      dockerfile: ../docker/next.dev.Dockerfile
     command: npm run dev
     ports:
       - "3000:3000"
